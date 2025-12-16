@@ -14,7 +14,7 @@ RUN apt update && apt install -y \
     libcups2 \
     libasound2 \
     fonts-liberation \
-    --no-install-recommends && rm -rf /var/lib/apt/lists/*
+    --no-install-recommends
 
 # Set working directory
 WORKDIR /home/container

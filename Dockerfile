@@ -1,5 +1,5 @@
 # Pakai Node.js slim
-FROM node:20-slim
+FROM node:20-bullseye
 
 # Install Chromium + dependency supaya Puppeteer bisa jalan
 RUN apt update && apt install -y \

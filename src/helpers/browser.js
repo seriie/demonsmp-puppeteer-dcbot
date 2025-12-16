@@ -4,10 +4,11 @@ let browser;
 let page;
 
 export async function getPage() {
+  console.log("Chrome path:", puppeteer.executablePath());
   if (!browser) {
     browser = await puppeteer.launch({
       headless: "new",
-      executablePath: puppeteer.executablePath(), // 🔥 INI PENTING
+      executablePath: puppeteer.executablePath(),
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",

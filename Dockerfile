@@ -1,6 +1,7 @@
+# Pakai Node.js slim
 FROM node:20-slim
 
-# Install Chromium + dependency
+# Install Chromium + dependency supaya Puppeteer bisa jalan
 RUN apt update && apt install -y \
     chromium \
     libnss3 \
@@ -18,11 +19,11 @@ RUN apt update && apt install -y \
 # Set working directory
 WORKDIR /home/container
 
-# Copy package.json and install dependencies
+# Copy package.json dan install dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copy source code
+# Copy semua source code
 COPY . .
 
 # Set default command

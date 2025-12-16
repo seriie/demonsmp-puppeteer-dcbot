@@ -8,7 +8,6 @@ export async function getPage() {
   if (!browser) {
     browser = await puppeteer.launch({
       headless: "new",
-      executablePath: puppeteer.executablePath(),
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",

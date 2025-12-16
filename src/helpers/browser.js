@@ -1,5 +1,10 @@
 import puppeteer from "puppeteer";
 import { PUPPETEER_CONFIG } from "../config/puppeteer.js";
+import fs from "fs";
+
+console.log("chromium:", fs.existsSync("/usr/bin/chromium"));
+console.log("chromium-browser:", fs.existsSync("/usr/bin/chromium-browser"));
+console.log("lib chromium:", fs.existsSync("/usr/lib/chromium/chromium"));
 
 let browser;
 let page;

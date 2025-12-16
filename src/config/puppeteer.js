@@ -1,6 +1,6 @@
 export const PUPPETEER_CONFIG = {
-  // executablePath: "/usr/bin/chromium-browser",
-  headless: false,
+  executablePath: "/usr/bin/chromium-browser",
+  headless: "new",
   args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  defaultViewport: null,
+  defaultViewport: null
 };

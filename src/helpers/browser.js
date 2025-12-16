@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer-core";
+import puppeteer from "puppeteer";
 import { PUPPETEER_CONFIG } from "../config/puppeteer.js";
 import fs from "fs";
 

@@ -8,8 +8,6 @@ export async function getPage() {
   if (!browser) {
     browser = await puppeteer.launch({
       ...PUPPETEER_CONFIG,
-      headless: "new",
-      defaultViewport: null,
     })
 
     page = await browser.newPage()

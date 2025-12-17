@@ -68,14 +68,14 @@ export async function loginAternos() {
   await sleep(2000);
 
   // await waitPageReady(page);
-  await skipAternosAds(page);
-
+  
   console.log("🔃 Waitiong for selector");
-
+  
   await page.waitForSelector(".server-ip", {
     visible: true,
     timeout: 60000,
   });
-
+  
+  await skipAternosAds(page);
   console.log("🚀 Server dashboard loaded");
 }

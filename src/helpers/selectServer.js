@@ -1,3 +1,5 @@
+import { skipAternosAds } from "./skipAternosAds";
+
 export async function selectServer(page) {
   await page.waitForSelector(".server-body[data-id]", {
     visible: true,
@@ -13,6 +15,7 @@ export async function selectServer(page) {
 
   const serverEl = await page.$(`.server-body[data-id="${serverId}"]`);
   await serverEl.click();
+  await skipAternosAds(page);
 
   console.log(`🖱️ Server with id: ${serverId} clicked`);
 }

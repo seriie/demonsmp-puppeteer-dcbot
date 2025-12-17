@@ -11,6 +11,9 @@ export async function loadCookies(page) {
 
   const cookies = JSON.parse(fs.readFileSync(COOKIE_PATH))
   await page.setCookie(...cookies)
+  await page.goto("https://aternos.org/servers", {
+    waitUntil: "networkidle2",
+  });
   console.log("🍪 Cookies loaded")
   return true
 }

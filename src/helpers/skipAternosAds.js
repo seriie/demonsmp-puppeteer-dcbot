@@ -4,7 +4,7 @@ export async function skipAternosAds(page, options = {}) {
   console.log("🛑 Checking blocking ads (vignette)...")
 
   const {
-    timeout = 10000,
+    timeout = 20000,
     closeSelector = '[aria-label="Close ad"], [aria-label="Close"]'
   } = options
 

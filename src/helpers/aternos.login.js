@@ -1,6 +1,7 @@
 import { getPage } from "./browser.js";
 import { ENV } from "../config/env.js";
 import { loadCookies, saveCookies } from "./cookies.js";
+import { sleep } from "./sleep.js";
 
 export async function loginAternos() {
   const page = await getPage();
@@ -35,6 +36,7 @@ export async function loginAternos() {
     await page.waitForSelector(".go-input-group.join-both input", {
       visible: true,
     });
+
     await page.type(".go-input-group.join-both input", ENV.ATERNOS_PASS);
 
     await Promise.all([
@@ -72,7 +74,7 @@ export async function loginAternos() {
 
   console.log("🖱️ Server clicked, checking ads...");
 
-  await page.waitForTimeout(2000);
+  await sleep(2000)
 
   const adCloseSelector = ".ad-container .close, .adsbygoogle + button";
 
@@ -81,7 +83,7 @@ export async function loginAternos() {
   if (adCloseBtn) {
     console.log("📢 Ads detected, closing...");
     await adCloseBtn.click();
-    await page.waitForTimeout(1000);
+    await sleep(1000)
   } else {
     console.log("✨ No ads, let's go");
   }

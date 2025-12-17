@@ -10,7 +10,7 @@ export async function loginAternos() {
   const page = await getPage();
 
   await page.goto("https://aternos.org/go", {
-    waitUntil: "networkidle2",
+    waitUntil: "domcontentloaded",
   });
 
   const usedCookie = await loadCookies(page);
@@ -32,7 +32,7 @@ export async function loginAternos() {
     console.log("⚠️ Cookie failed / login manually...");
 
     await page.goto("https://aternos.org/go/", {
-      waitUntil: "networkidle2",
+      waitUntil: "domcontentloaded",
     });
 
     await page.waitForSelector(".go-input-group.join-right input", {
@@ -48,7 +48,7 @@ export async function loginAternos() {
 
     await Promise.all([
       page.click(".login-button"),
-      page.waitForNavigation({ waitUntil: "networkidle2" }),
+      page.waitForNavigation({ waitUntil: "domcontentloaded" }),
     ]);
 
     console.log("⌛ Inputing manually...");

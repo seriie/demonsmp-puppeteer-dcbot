@@ -5,7 +5,7 @@ export async function startServer() {
   const page = await getPage()
 
   await page.goto("https://aternos.org/server/", {
-    waitUntil: "networkidle2"
+    waitUntil: "domcontentloaded"
   })
 
   await selectServer(page)

@@ -2,7 +2,7 @@ import "./config/env.js"
 import "./events/ready.js"
 import "./events/interaction.js"
 import { client } from "./client.js"
-
+import { registerInteraction } from "./events/interaction.js"
 import { REST, Routes } from "discord.js"
 import { aternosCommand } from "./commands/aternos.command.js"
 
@@ -16,5 +16,6 @@ await rest.put(
 
 console.log("✅ Slash command registered")
 
+registerInteraction(client)
 
 client.login(process.env.DISCORD_TOKEN)

@@ -7,6 +7,7 @@ export async function getPage() {
   console.log("Chrome path:", puppeteer.executablePath());
   if (!browser) {
     browser = await puppeteer.launch({
+      executalePath: "/home/container/.cache/puppeteer",
       headless: "new",
       args: [
         "--no-sandbox",

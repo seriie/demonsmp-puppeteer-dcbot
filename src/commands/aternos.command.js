@@ -8,6 +8,7 @@ export const aternosCommand = new SlashCommandBuilder()
       .setName("start")
       .setDescription("Start the server")
   )
+  
   .addSubcommand(sub =>
     sub
       .setName("status")

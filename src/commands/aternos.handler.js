@@ -1,17 +1,37 @@
-import { aternosStart, aternosStatus } from "../services/aternos.service.js"
+import {
+  aternosStart,
+  aternosStatus,
+  initAternos,
+} from "../services/aternos.service.js";
+import { ensureAternos } from "../services/aternos.ensure.js";
 
 export async function handleAternosCommand(interaction) {
-  const sub = interaction.options.getSubcommand()
+  const sub = interaction.options.getSubcommand();
 
-  await interaction.deferReply({ ephemeral: false })
+  await interaction.deferReply();
 
-  if (sub === "start") {
-    const res = await aternosStart()
-    await interaction.editReply(res)
-  }
+  initAternos;
 
-  if (sub === "status") {
-    const res = await aternosStatus()
-    await interaction.editReply(res)
+  try {
+    await ensureAternos();
+
+    if (sub === "start") {
+      interaction.editReply("⏳ Starting server...");
+
+      aternosStart()
+        .then((res) => interaction.editReply(res))
+        .catch(() => interaction.editReply("❌ Gagal start server"));
+    }
+
+    if (sub === "status") {
+      interaction.editReply("⏳ Starting server...");
+
+      aternosStatus()
+        .then((res) => interaction.editReply(res))
+        .catch(() => interaction.editReply("❌ Gagal start server"));
+    }
+  } catch (err) {
+    console.error(err);
+    await interaction.editReply("💥 Aternos error");
   }
 }

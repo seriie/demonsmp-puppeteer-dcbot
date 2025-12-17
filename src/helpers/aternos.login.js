@@ -3,7 +3,7 @@ import { ENV } from "../config/env.js";
 import { loadCookies, saveCookies } from "./cookies.js";
 import { sleep } from "./sleep.js";
 import { skipAternosAds } from "./skipAternosAds.js";
-import { waitPageReady } from "./waitpageReady.js";
+// import { waitPageReady } from "./waitpageReady.js";
 
 export async function loginAternos() {
   const page = await getPage();
@@ -81,7 +81,7 @@ export async function loginAternos() {
 
   await sleep(2000);
 
-  await waitPageReady(page);
+  // await waitPageReady(page);
   await skipAternosAds(page);
 
   console.log("🔃 Waitiong for selector");

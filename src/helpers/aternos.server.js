@@ -10,15 +10,40 @@ export async function startServer() {
 
   await selectServer(page)
 
-  await page.waitForSelector("#start", { timeout: 0 })
-  await page.click("#start")
+  await page.waitForTimeout(1000)
+
+  const startBtn = await page.$("#start")
+
+  if (!startBtn) {
+    let status = "unknown"
+    try {
+      status = await page.$eval(
+        ".statuslabel-label",
+        el => el.innerText.trim().toLowerCase()
+      )
+    } catch {}
+
+    return {
+      action: "noop",
+      status,
+      message:
+        status === "online"
+          ? "🟢 Server already online"
+          : status === "starting"
+          ? "🟡 Server is already starting"
+          : "⚠️ Start button not available",
+      lastUpdate: Date.now()
+    }
+  }
+
+  await startBtn.click()
 
   return {
     action: "starting",
+    message: "🔥 Server starting...",
     lastUpdate: Date.now()
   }
 }
-
 let fetching = false
 
 export async function getStatus() {

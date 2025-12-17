@@ -20,7 +20,7 @@ export async function handleAternosCommand(interaction) {
     if (sub === "start") {
       await interaction.editReply("⏳ Starting server...")
       const res = await aternosStart()
-      await interaction.editReply(res)
+      await interaction.editReply(res.message)
     }
 
     if (sub === "status") {

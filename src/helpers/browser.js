@@ -8,7 +8,7 @@ export async function getPage() {
   if (!browser) {
     browser = await puppeteer.launch({
       executalePath: "/home/container/.cache/puppeteer",
-      headless: false,
+      headless: "new",
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",

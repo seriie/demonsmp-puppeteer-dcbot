@@ -34,6 +34,9 @@ export async function loginAternos() {
     await page.goto("https://aternos.org/go/", {
       waitUntil: "networkidle2",
     });
+
+    await waitPageReady(page)
+    await skipAternosAds(page)
     
     await page.waitForSelector(".go-input-group.join-right input", {
       visible: true,

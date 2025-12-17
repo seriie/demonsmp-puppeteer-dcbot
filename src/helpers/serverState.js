@@ -1,7 +1,11 @@
 import fs from "fs/promises"
 import path from "path"
+import { fileURLToPath } from "url"
 
-const FILE = path.resolve("src/data/server.json")
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+const FILE = path.join(__dirname, "../data/server.json")
 
 export async function writeServerState(data) {
   await fs.writeFile(

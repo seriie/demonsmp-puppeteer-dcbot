@@ -4,11 +4,10 @@ let browser;
 let page;
 
 export async function getPage() {
-  console.log("Chrome path:", puppeteer.executablePath());
   if (!browser) {
     if(process.env.ENVIRONTMENT !== "local") {
       browser = await puppeteer.launch({
-        executalePath: "/home/container/.cache/puppeteer",
+        executablePath: "/home/container/.cache/puppeteer",
         headless: "new",
         args: [
           "--no-sandbox",

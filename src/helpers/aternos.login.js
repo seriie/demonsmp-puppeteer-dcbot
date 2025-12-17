@@ -76,6 +76,7 @@ export async function loginAternos() {
     visible: true,
     timeout: 60000,
   });
+  await skipAternosAds(page);
   
   console.log("🚀 Server dashboard loaded");
 }

@@ -2,6 +2,7 @@ import { getPage } from "./browser.js";
 import { ENV } from "../config/env.js";
 import { loadCookies, saveCookies } from "./cookies.js";
 import { sleep } from "./sleep.js";
+import { skipAternosAds } from "./skipAternosAds.js";
 
 export async function loginAternos() {
   const page = await getPage();
@@ -9,6 +10,8 @@ export async function loginAternos() {
   await page.goto("https://aternos.org/servers/", {
     waitUntil: "domcontentloaded",
   });
+
+  await skipAternosAds(page)
 
   const usedCookie = await loadCookies(page);
   if (usedCookie) {

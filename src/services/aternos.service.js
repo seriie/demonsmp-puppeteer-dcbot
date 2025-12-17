@@ -1,6 +1,7 @@
 import { loginAternos } from "../helpers/aternos.login.js"
 import { startServer } from "../helpers/aternos.server.js"
 import { readServerState } from "../helpers/serverState.js"
+import { startAternosPoller } from "./aternos.poller.js"
 
 let loggedIn = false
 let initPromise = null
@@ -13,6 +14,7 @@ export function initAternos() {
       await loginAternos()
       loggedIn = true
       console.log("✅ Aternos ready")
+      startAternosPoller()
     })()
   }
 

@@ -71,11 +71,11 @@ export async function loginAternos() {
   
   console.log("🔃 Waitiong for selector");
   
+  await skipAternosAds(page);
   await page.waitForSelector(".server-ip", {
     visible: true,
     timeout: 60000,
   });
   
-  await skipAternosAds(page);
   console.log("🚀 Server dashboard loaded");
 }

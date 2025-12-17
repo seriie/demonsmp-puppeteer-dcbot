@@ -6,15 +6,26 @@ let page;
 export async function getPage() {
   console.log("Chrome path:", puppeteer.executablePath());
   if (!browser) {
-    browser = await puppeteer.launch({
-      executalePath: "/home/container/.cache/puppeteer",
-      headless: "new",
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-dev-shm-usage"
-      ],
-    });
+    if(process.env.ENVIRONTMENT !== "local") {
+      browser = await puppeteer.launch({
+        executalePath: "/home/container/.cache/puppeteer",
+        headless: "new",
+        args: [
+          "--no-sandbox",
+          "--disable-setuid-sandbox",
+          "--disable-dev-shm-usage"
+        ],
+      });
+    } else {
+      browser = await puppeteer.launch({
+        headless: false,
+        args: [
+          "--no-sandbox",
+          "--disable-setuid-sandbox",
+          "--disable-dev-shm-usage"
+        ],
+      });
+    }
 
     page = await browser.newPage();
     await page.setUserAgent(

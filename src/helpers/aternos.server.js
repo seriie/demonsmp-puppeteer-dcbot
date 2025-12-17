@@ -19,41 +19,49 @@ export async function startServer() {
   }
 }
 
+let fetching = false
+
 export async function getStatus() {
-  const page = await getPage()
+  if (fetching) return null
+  fetching = true
 
-  await page.goto("https://aternos.org/server/", {
-    waitUntil: "networkidle2"
-  })
-
-  // 🟢 STATUS (online / offline / starting)
-  const status = await page.$eval(
-    ".statuslabel-label",
-    el => el.innerText.trim().toLowerCase()
-  )
-
-  // 🟢 PLAYER COUNT
-  let players = "0/0"
   try {
-    players = await page.$eval(
-      ".statusplayerbadge",
-      el => el.innerText.trim()
-    )
-  } catch {}
+    const page = await getPage()
 
-  // 🟢 IP SERVER
-  let ip = "-"
-  try {
-    ip = await page.$eval(
-      ".server-ip",
-      el => el.innerText.trim()
-    )
-  } catch {}
+    await page.goto("https://aternos.org/server/", {
+      waitUntil: "domcontentloaded"
+    })
 
-  return {
-    status,
-    players,
-    ip,
-    lastUpdate: Date.now()
+    await page.waitForSelector(".statuslabel-label", { timeout: 15000 })
+
+    const status = await page.$eval(
+      ".statuslabel-label",
+      el => el.innerText.trim().toLowerCase()
+    )
+
+    let players = "0/0"
+    try {
+      players = await page.$eval(
+        ".statusplayerbadge",
+        el => el.innerText.trim()
+      )
+    } catch {}
+
+    let ip = "-"
+    try {
+      ip = await page.$eval(
+        ".server-ip",
+        el => el.innerText.trim()
+      )
+    } catch {}
+
+    return {
+      status,
+      players,
+      ip,
+      lastUpdate: Date.now()
+    }
+  } finally {
+    fetching = false
   }
 }

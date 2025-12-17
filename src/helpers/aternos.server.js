@@ -20,6 +20,6 @@ export async function getStatus() {
     waitUntil: "networkidle2"
   })
 
-  const status = await page.$eval("#status", el => el.innerText)
+  const status = await page.$eval(".statuslabel-label", el => el.innerText)
   return `📡 Status: ${status}`
 }

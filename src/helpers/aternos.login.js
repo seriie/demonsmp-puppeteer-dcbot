@@ -72,9 +72,7 @@ export async function loginAternos() {
   }, serverId)
   
 
-  await page.waitForSelector(".server-ip", {
-    timeout: 30000,
-  })
+  await page.waitForSelector(".server-ip", { timeout: 30000, visible: true })
 
   console.log("🚀 Server dashboard loaded")
 }

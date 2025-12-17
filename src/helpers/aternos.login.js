@@ -39,7 +39,7 @@ export async function loginAternos() {
     ])
 
     console.log("🧠 CAPTCHA muncul")
-    console.log("⌛ Silakan isi manual...")
+    console.log("⌛ Inputing manually...")
 
     await page.waitForFunction(
       () => location.href.includes("/servers"),
@@ -72,7 +72,7 @@ export async function loginAternos() {
   }, serverId)
 
   await page.waitForSelector(".server-status", {
-    timeout: 15000,
+    timeout: 30000,
   })
 
   console.log("🚀 Server dashboard loaded")

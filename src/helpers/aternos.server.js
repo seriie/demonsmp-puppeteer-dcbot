@@ -32,7 +32,7 @@ export async function getStatus() {
       waitUntil: "domcontentloaded"
     })
 
-    await page.waitForSelector(".statuslabel-label", { timeout: 15000 })
+    await page.waitForSelector(".statuslabel-label", { timeout: 60000 })
 
     const status = await page.$eval(
       ".statuslabel-label",

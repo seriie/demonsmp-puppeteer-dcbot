@@ -10,13 +10,13 @@ export async function handleAternosCommand(interaction) {
 
   await interaction.deferReply();
 
-  initAternos;
+  await initAternos();
 
   try {
     await ensureAternos();
 
     if (sub === "start") {
-      interaction.editReply("⏳ Starting server...");
+      await interaction.editReply("⏳ Starting server...");
 
       aternosStart()
         .then((res) => interaction.editReply(res))
@@ -24,7 +24,7 @@ export async function handleAternosCommand(interaction) {
     }
 
     if (sub === "status") {
-      interaction.editReply("⏳ Starting server...");
+      await interaction.editReply("⏳ Starting server...");
 
       aternosStatus()
         .then((res) => interaction.editReply(res))

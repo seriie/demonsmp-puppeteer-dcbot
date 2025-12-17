@@ -66,11 +66,15 @@ export async function loginAternos() {
   
   const serverEl = await page.$(`.server-body[data-id="${serverId}"]`);
   await serverEl.click();
+
+  console.log(`🖱️ Server with id: ${serverId} clicked`);
   
   await sleep(2000)
   
   await waitPageReady(page)
   await skipAternosAds(page)
+
+  console.log("🔃 Waitiong for selector")
 
   await page.waitForSelector(".server-ip", {
     visible: true,

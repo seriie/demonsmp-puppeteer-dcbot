@@ -64,12 +64,9 @@ export async function loginAternos() {
 
   console.log("🎮 Server ID:", serverId)
 
-  await page.evaluate(id => {
-    const el = document.querySelector(`.server-body[data-id="${id}"]`)
-    el.scrollIntoView({ behavior: "smooth", block: "center" })
-    el.click()
-  }, serverId)
-  
+  const serverEl = await page.$(`.server-body[data-id="${serverId}"]`);
+  await serverEl.click();
+
   console.log(`clicked server id: ${id}`)
 
   await page.waitForSelector(".server-ip", {

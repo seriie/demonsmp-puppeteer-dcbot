@@ -19,8 +19,8 @@ export async function loginAternos() {
     await skipAternosAds(page)
     
     if (page.url().includes("/servers")) {
-      console.log("🍪 Cookies loaded");
       await skipAternosAds(page)
+      console.log("🍪 Cookies loaded");
       console.log("✅ Login via cookie success");
     }
   }

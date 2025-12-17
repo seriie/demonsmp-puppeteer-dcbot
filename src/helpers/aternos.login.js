@@ -77,17 +77,7 @@ export async function loginAternos() {
 
   await sleep(2000)
 
-  const adCloseSelector = ".ad-container .close, .adsbygoogle + button";
-
-  const adCloseBtn = await page.$(adCloseSelector);
-
-  if (adCloseBtn) {
-    console.log("📢 Ads detected, closing...");
-    await adCloseBtn.click();
-    await sleep(1000)
-  } else {
-    console.log("✨ No ads, let's go");
-  }
+  await skipAternosAds(page)
 
   await page.waitForSelector(".server-ip", {
     visible: true,

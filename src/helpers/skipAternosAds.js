@@ -4,16 +4,29 @@ export async function skipAternosAds(page, options = {}) {
   console.log("🛑 Checking blocking ads (vignette)...")
 
   const {
-    timeout = 20000,
+    timeout = 15000,
     closeSelector = '[aria-label="Close ad"], [aria-label="Close"]'
   } = options
 
   const start = Date.now()
 
   while (Date.now() - start < timeout) {
+    const url = page.url()
+
+    if (url.includes("google_vignette")) {
+      console.log("🚫 Google vignette detected → forcing back")
+
+      await page.evaluate(() => {
+        history.back()
+      })
+
+      await sleep(1500)
+      return true
+    }
+
     let closeBtn = await page.$(closeSelector)
     if (closeBtn) {
-      console.log("📢 Blocking ad detected (main DOM) → closing")
+      console.log("📢 Blocking ad detected (DOM) → closing")
       await closeBtn.click()
       await sleep(500)
       return true
@@ -28,8 +41,7 @@ export async function skipAternosAds(page, options = {}) {
           await sleep(500)
           return true
         }
-      } catch {
-      }
+      } catch {}
     }
 
     await sleep(300)

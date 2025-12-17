@@ -64,7 +64,7 @@ export async function loginAternos() {
 
   console.log("🎮 Server ID:", serverId)
 
-  const serverEl = await page.$(`.server-body[data-id="${serverId}"]`);
+  const serverEl = await page.$(`.server-body[data-id="vDDnh1lbjAlcI1r9"]`);
   await serverEl.click();
 
   console.log(`clicked server id: ${id}`)

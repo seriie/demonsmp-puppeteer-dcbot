@@ -1,4 +1,5 @@
 import { getPage } from "./browser.js"
+import { selectServer } from "./selectServer.js"
 
 export async function startServer() {
   const page = await getPage()
@@ -6,6 +7,8 @@ export async function startServer() {
   await page.goto("https://aternos.org/server/", {
     waitUntil: "networkidle2"
   })
+
+  await selectServer(page)
 
   await page.waitForSelector("#start", { timeout: 0 })
   await page.click("#start")

@@ -3,6 +3,7 @@ import { ENV } from "../config/env.js";
 import { loadCookies, saveCookies } from "./cookies.js";
 import { sleep } from "./sleep.js";
 import { skipAternosAds } from "./skipAternosAds.js";
+import { selectServer } from "./selectServer.js";
 // import { waitPageReady } from "./waitpageReady.js";
 
 export async function loginAternos() {
@@ -62,22 +63,7 @@ export async function loginAternos() {
 
   console.log("🧠 Selecting server...");
 
-  await page.waitForSelector(".server-body[data-id]", {
-    visible: true,
-    timeout: 0,
-  });
-
-  const serverId = await page.$eval(
-    ".server-body[data-id]",
-    (el) => el.dataset.id
-  );
-
-  console.log("🎮 Server ID:", serverId);
-
-  const serverEl = await page.$(`.server-body[data-id="${serverId}"]`);
-  await serverEl.click();
-
-  console.log(`🖱️ Server with id: ${serverId} clicked`);
+  await selectServer(page)
 
   await sleep(2000);
 

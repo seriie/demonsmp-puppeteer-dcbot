@@ -7,7 +7,7 @@ export async function loginAternos() {
   const page = await getPage();
 
   await page.goto("https://aternos.org/servers/", {
-    waitUntil: "networkidle2",
+    waitUntil: "domcontentloaded",
   });
 
   const usedCookie = await loadCookies(page);
@@ -20,7 +20,6 @@ export async function loginAternos() {
     }
   }
 
-  // 3️⃣ kalau belum login → manual
   if (!page.url().includes("/servers")) {
     console.log("⚠️ Cookie failed / login manually...");
 
@@ -44,7 +43,6 @@ export async function loginAternos() {
       page.waitForNavigation({ waitUntil: "networkidle2" }),
     ]);
 
-    console.log("🧠 CAPTCHA muncul");
     console.log("⌛ Inputing manually...");
 
     await page.waitForFunction(() => location.href.includes("/servers"), {

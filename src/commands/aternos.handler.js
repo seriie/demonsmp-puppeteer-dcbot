@@ -1,7 +1,6 @@
 import {
   aternosStart,
   aternosStatus,
-  initAternos,
 } from "../services/aternos.service.js";
 import { ensureAternos } from "../services/aternos.ensure.js";
 
@@ -10,25 +9,19 @@ export async function handleAternosCommand(interaction) {
 
   await interaction.deferReply();
 
-  await initAternos();
-
   try {
     await ensureAternos();
 
     if (sub === "start") {
       await interaction.editReply("⏳ Starting server...");
-
-      aternosStart()
-        .then((res) => interaction.editReply(res))
-        .catch(() => interaction.editReply("❌ Gagal start server"));
+      const res = await aternosStart();
+      await interaction.editReply(res);
     }
 
     if (sub === "status") {
-      await interaction.editReply("⏳ Starting server...");
-
-      aternosStatus()
-        .then((res) => interaction.editReply(res))
-        .catch(() => interaction.editReply("❌ Gagal start server"));
+      await interaction.editReply("⏳ Checking status...");
+      const res = await aternosStatus();
+      await interaction.editReply(res);
     }
   } catch (err) {
     console.error(err);

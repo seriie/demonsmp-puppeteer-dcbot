@@ -1,19 +1,21 @@
-import { getStatus } from "../helpers/aternos.server.js"
-import { writeServerState } from "../helpers/serverState.js"
+import { getStatus } from "../helpers/aternos.server.js";
+import { writeServerState } from "../helpers/serverState.js";
 
-let running = false
+let running = false;
 
 export function startAternosPoller() {
-  if (running) return
-  running = true
+  if (running) return;
+  running = true;
 
   setInterval(async () => {
     try {
-      const status = await getStatus()
-      await writeServerState(status)
-      console.log("🔄 Server status updated")
-    } catch {
-      console.log("⚠️ Failed update server status")
+      const status = await getStatus();
+      if (!status) return;
+
+      await writeServerState(status);
+      console.log("🔄 Server status updated");
+    } catch (err) {
+      console.error("❌ Poller error:", err);
     }
-  }, 60_000)
+  }, 60_000);
 }

@@ -1,4 +1,4 @@
-import { initAternos } from "./aternos.service"
+import { initAternos } from "./aternos.service.js"
 
 let aternosReady = false
 

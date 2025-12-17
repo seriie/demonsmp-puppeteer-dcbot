@@ -1,4 +1,4 @@
-import { skipAternosAds } from "./skipAternosAds";
+import { skipAternosAds } from "./skipAternosAds.js";
 
 export async function selectServer(page) {
   await page.waitForSelector(".server-body[data-id]", {

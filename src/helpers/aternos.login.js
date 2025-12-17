@@ -18,9 +18,6 @@ export async function loginAternos() {
   const usedCookie = await loadCookies(page);
 
   if (usedCookie) {
-    await waitPageReady(page);
-    await skipAternosAds(page);
-
     const loggedIn = await waitUntilLoggedIn(page);
 
     if (loggedIn) {

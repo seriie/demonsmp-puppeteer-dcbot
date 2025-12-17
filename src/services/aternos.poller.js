@@ -6,7 +6,7 @@ let running = false;
 export function startAternosPoller() {
   if (running) return;
   running = true;
-  console.log("Starting aternos poller")
+  console.log("⏳ Starting aternos poller")
 
   setInterval(async () => {
     try {
@@ -18,5 +18,5 @@ export function startAternosPoller() {
     } catch (err) {
       console.error("❌ Poller error:", err);
     }
-  }, 60_000);
+  }, 30_000);
 }

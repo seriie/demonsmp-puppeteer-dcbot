@@ -13,7 +13,10 @@ export async function startServer() {
   await page.waitForSelector("#start", { timeout: 0 })
   await page.click("#start")
 
-  return "🔥 Server starting..."
+  return {
+    action: "starting",
+    lastUpdate: Date.now()
+  }
 }
 
 export async function getStatus() {
@@ -23,6 +26,34 @@ export async function getStatus() {
     waitUntil: "networkidle2"
   })
 
-  const status = await page.$eval(".statuslabel-label", el => el.innerText)
-  return `📡 Status: ${status}`
+  // 🟢 STATUS (online / offline / starting)
+  const status = await page.$eval(
+    ".statuslabel-label",
+    el => el.innerText.trim().toLowerCase()
+  )
+
+  // 🟢 PLAYER COUNT
+  let players = "0/0"
+  try {
+    players = await page.$eval(
+      ".statusplayerbadge",
+      el => el.innerText.trim()
+    )
+  } catch {}
+
+  // 🟢 IP SERVER
+  let ip = "-"
+  try {
+    ip = await page.$eval(
+      ".server-ip",
+      el => el.innerText.trim()
+    )
+  } catch {}
+
+  return {
+    status,
+    players,
+    ip,
+    lastUpdate: Date.now()
+  }
 }

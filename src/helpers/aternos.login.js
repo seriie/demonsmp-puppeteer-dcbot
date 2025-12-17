@@ -75,8 +75,6 @@ export async function loginAternos() {
   const serverEl = await page.$(`.server-body[data-id="${serverId}"]`);
   await serverEl.click();
 
-  console.log("🖱️ Server clicked, checking ads...");
-
   await sleep(2000)
 
   await skipAternosAds(page)

@@ -7,7 +7,6 @@ export async function getPage() {
   if (!browser) {
     if(process.env.ENVIRONTMENT !== "local") {
       browser = await puppeteer.launch({
-        executablePath: "/home/container/.cache/puppeteer",
         headless: "new",
         args: [
           "--no-sandbox",

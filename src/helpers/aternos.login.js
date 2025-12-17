@@ -12,13 +12,15 @@ export async function loginAternos() {
   });
 
   await skipAternosAds(page)
-
+  
   const usedCookie = await loadCookies(page);
   if (usedCookie) {
     await page.reload({ waitUntil: "networkidle2" });
-
+    await skipAternosAds(page)
+    
     if (page.url().includes("/servers")) {
       console.log("🍪 Cookies loaded");
+      await skipAternosAds(page)
       console.log("✅ Login via cookie success");
     }
   }

@@ -71,7 +71,7 @@ export async function loginAternos() {
     console.log(`clicked server id: ${id}`)
   }, serverId)
 
-  await page.waitForSelector(".server-status", {
+  await page.waitForSelector(".server-ip", {
     timeout: 30000,
   })
 

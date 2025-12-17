@@ -3,7 +3,7 @@ import { sleep } from "./sleep.js"
 export async function skipAternosAds(page, options = {}) {
   const {
     timeout = 10000,
-    selector = '[aria-label="Close ad"], [aria-label="Close"], button[class*="close"]'
+    selector = '[aria-label="Close ad"]'
   } = options
 
   const start = Date.now()

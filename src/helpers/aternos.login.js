@@ -4,85 +4,89 @@ import { loadCookies, saveCookies } from "./cookies.js";
 import { sleep } from "./sleep.js";
 import { skipAternosAds } from "./skipAternosAds.js";
 import { waitPageReady } from "./waitpageReady.js";
+import { waitUntilLoggedIn } from "./waitUntilLoggedIn.js";
 
 export async function loginAternos() {
   const page = await getPage();
 
-  await page.goto("https://aternos.org/servers/", {
+  await page.goto("https://aternos.org/", {
     waitUntil: "domcontentloaded",
   });
 
-  await waitPageReady(page)
-  await skipAternosAds(page)
-  
+  let isLoggedIn = false;
+
   const usedCookie = await loadCookies(page);
+
   if (usedCookie) {
-    await waitPageReady(page)
-    await skipAternosAds(page)
-    
-    if (page.url().includes("/servers")) {
+    await waitPageReady(page);
+    await skipAternosAds(page);
+
+    const loggedIn = await waitUntilLoggedIn(page);
+
+    if (loggedIn) {
       console.log("🍪 Cookies loaded");
       console.log("✅ Login via cookie success");
+      isLoggedIn = true;
     }
   }
-  
-  if (!page.url().includes("/servers")) {
+
+  if (!isLoggedIn) {
     console.log("⚠️ Cookie failed / login manually...");
-    
+
     await page.goto("https://aternos.org/go/", {
       waitUntil: "networkidle2",
     });
 
-    await waitPageReady(page)
-    await skipAternosAds(page)
-    
+    await waitPageReady(page);
+    await skipAternosAds(page);
+
     await page.waitForSelector(".go-input-group.join-right input", {
       visible: true,
     });
     await page.type(".go-input-group.join-right input", ENV.ATERNOS_USER);
-    
+
     await page.waitForSelector(".go-input-group.join-both input", {
       visible: true,
     });
-    
+
     await page.type(".go-input-group.join-both input", ENV.ATERNOS_PASS);
-    
+
     await Promise.all([
       page.click(".login-button"),
       page.waitForNavigation({ waitUntil: "networkidle2" }),
     ]);
-    
+
     console.log("⌛ Inputing manually...");
-    
+
     await page.waitForFunction(() => location.href.includes("/servers"), {
       timeout: 0,
     });
-    
+
     await saveCookies(page);
     console.log("✅ Login manual + cookie saved");
   }
-  
+
   console.log("🧠 Selecting server...");
-  
+
   await page.waitForSelector(".server-body[data-id]", {
     visible: true,
     timeout: 0,
   });
-  
+
   const serverId = await page.$eval(
     ".server-body[data-id]",
     (el) => el.dataset.id
   );
-  
+
   console.log("🎮 Server ID:", serverId);
-  
+
   const serverEl = await page.$(`.server-body[data-id="${serverId}"]`);
   await serverEl.click();
-  
-  await sleep(2000)
-  
-  await waitPageReady(page)
-  await skipAternosAds(page)
+
+  await sleep(2000);
+
+  await waitPageReady(page);
+  await skipAternosAds(page);
 
   await page.waitForSelector(".server-ip", {
     visible: true,

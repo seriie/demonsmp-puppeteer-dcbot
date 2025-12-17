@@ -3,7 +3,7 @@ import {
   aternosStatus,
 } from "../services/aternos.service.js";
 import { ensureAternos } from "../services/aternos.ensure.js";
-import { withTimeout } from "../utils/withTimeout.js"
+import { withTimeout } from "../lib/utils/withTimeout.js"
 
 export async function handleAternosCommand(interaction) {
   const sub = interaction.options.getSubcommand()

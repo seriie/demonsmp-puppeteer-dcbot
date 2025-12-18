@@ -5,6 +5,7 @@ export function getStatusIcon(status = "") {
   if (s.includes("starting")) return "🔄";
   if (s.includes("loading")) return "🔄";
   if (s.includes("saving")) return "📥";
+  if (s.includes("queue")) return ":hourglass:";
 
   return "🔴";
 }

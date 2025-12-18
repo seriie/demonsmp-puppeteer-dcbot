@@ -1,5 +1,5 @@
 import fs from "fs";
-import { mylogs } from "../lib/utils/mylogs";
+import { mylogs } from "../lib/utils/mylogs.js";
 
 const COOKIE_PATH = "./cookies.json";
 

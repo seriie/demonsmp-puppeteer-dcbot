@@ -1,5 +1,5 @@
 export function mylogs(icon, text) {
-    const date = new Date.now().toString();
+  const date = Date.now().toString();
 
-    return `[${date}] ${icon}  ${text}`;
+  return `[${date}] ${icon}  ${text}`;
 }

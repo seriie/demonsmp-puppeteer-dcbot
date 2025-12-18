@@ -1,11 +1,12 @@
 import { sleep } from "./sleep.js"
+import { mylogs } from "../lib/utils/mylogs.js"
 
 export async function skipAternosAds(page, options = {}) {
-  console.log("🛑 Checking blocking ads (vignette)...")
+  mylogs("🛑", "Checking blocking ads (vignette)...")
 
   const {
     timeout = 15000,
-    closeSelector = '[aria-label="Close ad"], [aria-label="Close"]'
+    // closeSelector = '[aria-label="Close ad"], [aria-label="Close"]'
   } = options
 
   const start = Date.now()
@@ -14,7 +15,7 @@ export async function skipAternosAds(page, options = {}) {
     const url = page.url()
 
     if (url.includes("google_vignette")) {
-      console.log("🚫 Google vignette detected → forcing back")
+      mylogs("🚫", "Google vignette detected → forcing back")
 
       await page.evaluate(() => {
         history.back()
@@ -47,6 +48,6 @@ export async function skipAternosAds(page, options = {}) {
     await sleep(300)
   }
 
-  console.log("✨ No blocking ads")
+  mylogs("✨", "No blocking ads")
   return false
 }

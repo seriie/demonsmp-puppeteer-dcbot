@@ -1,5 +1,6 @@
 import { Events } from "discord.js"
 import { handleAternosCommand } from "../commands/aternos.handler.js"
+import { mylogs } from "../lib/utils/mylogs.js"
 
 export function registerInteraction(client) {
   client.on(Events.InteractionCreate, async (interaction) => {
@@ -8,7 +9,7 @@ export function registerInteraction(client) {
     try {
       await handleAternosCommand(interaction)
     } catch (err) {
-      console.error(err)
+      mylogs("❌", `Interaction error: ${err}`)
 
       if (interaction.deferred || interaction.replied) {
         await interaction.editReply("💥 Internal error")

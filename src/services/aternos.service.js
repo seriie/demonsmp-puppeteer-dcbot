@@ -3,6 +3,7 @@ import { startServer } from "../helpers/aternos.server.js";
 import { readServerState } from "../helpers/serverState.js";
 import { startAternosPoller } from "./aternos.poller.js";
 import { getStatusIcon } from "../lib/utils/getStatusIcon.js";
+import { mylogs } from "../lib/utils/mylogs.js";
 
 let loggedIn = false;
 let initPromise = null;
@@ -14,7 +15,7 @@ export function initAternos() {
     initPromise = (async () => {
       await loginAternos();
       loggedIn = true;
-      console.log("✅ Aternos ready");
+      mylogs("✅", "Aternos ready");
       startAternosPoller();
     })();
   }

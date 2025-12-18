@@ -1,4 +1,5 @@
 import { skipAternosAds } from "./skipAternosAds.js";
+import { mylogs } from "../lib/utils/mylogs.js";
 
 export async function selectServer(page) {
   await page.waitForSelector(".server-body[data-id]", {
@@ -11,11 +12,11 @@ export async function selectServer(page) {
     (el) => el.dataset.id
   );
 
-  console.log("🎮 Server ID:", serverId);
+  mylogs("🎮", `Server ID: ${serverId}`);
 
   const serverEl = await page.$(`.server-body[data-id="${serverId}"]`);
   await serverEl.click();
   await skipAternosAds(page);
 
-  console.log(`🖱️ Server with id: ${serverId} clicked`);
+  mylogs("🖱️", `Server with id: ${serverId} clicked`);
 }

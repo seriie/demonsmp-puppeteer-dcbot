@@ -4,6 +4,7 @@ import { loadCookies, saveCookies } from "./cookies.js";
 import { sleep } from "./sleep.js";
 import { skipAternosAds } from "./skipAternosAds.js";
 import { selectServer } from "./selectServer.js";
+import { mylogs } from "../lib/utils/mylogs.js";
 // import { waitPageReady } from "./waitpageReady.js";
 
 export async function loginAternos() {
@@ -21,15 +22,15 @@ export async function loginAternos() {
 
     try {
       await page.waitForSelector(".server-body[data-id]", { timeout: 5000 });
-      console.log("🍪 Cookies loaded");
-      console.log("✅ Login via cookie success");
+      mylogs("🍪", "Cookies loaded");
+      mylogs("✅", "Login via cookie success");
     } catch {
-      console.log("⚠️ Cookie invalid");
+      mylogs("⚠️", "Cookie invalid");
     }
   }
 
   if (!usedCookie) {
-    console.log("⚠️ Cookie failed / login manually...");
+    mylogs("⚠️", "Cookie failed / login manually...");
 
     await page.goto("https://aternos.org/go/", {
       waitUntil: "domcontentloaded",
@@ -51,17 +52,17 @@ export async function loginAternos() {
       page.waitForNavigation({ waitUntil: "domcontentloaded" }),
     ]);
 
-    console.log("⌛ Inputing manually...");
+    mylogs("⌛", "Inputing manually...");
 
     await page.waitForFunction(() => location.href.includes("/servers"), {
       timeout: 0,
     });
 
     await saveCookies(page);
-    console.log("✅ Login manual + cookie saved");
+    mylogs("✅", "Login manual + cookie saved");
   }
 
-  console.log("🧠 Selecting server...");
+  mylogs("🧠", "Selecting server...");
 
   await selectServer(page)
 
@@ -69,9 +70,9 @@ export async function loginAternos() {
 
   // await waitPageReady(page);
   
-  console.log("🔃 Waitiong for selector");
+  mylogs("🔃", "Waitiong for selector");
   
   await skipAternosAds(page);
   
-  console.log("🚀 Server dashboard loaded");
+  mylogs("🚀", "Server dashboard loaded");
 }

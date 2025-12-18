@@ -5,6 +5,7 @@ import { client } from "./client.js"
 import { registerInteraction } from "./events/interaction.js"
 import { REST, Routes } from "discord.js"
 import { aternosCommand } from "./commands/aternos.command.js"
+import { mylogs } from "./lib/utils/mylogs.js"
 
 const rest = new REST({ version: "10" })
   .setToken(process.env.DISCORD_TOKEN)
@@ -14,7 +15,7 @@ await rest.put(
   { body: [aternosCommand.toJSON()] }
 )
 
-console.log("✅ Slash command registered")
+mylogs("✅", "Slash command registered")
 
 registerInteraction(client)
 

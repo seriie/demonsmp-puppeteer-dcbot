@@ -1,4 +1,5 @@
 import fs from "fs";
+import { mylogs } from "../lib/utils/mylogs";
 
 const COOKIE_PATH = "./cookies.json";
 
@@ -12,12 +13,12 @@ export async function loadCookies(page) {
   const cookies = JSON.parse(fs.readFileSync("./cookies.json", "utf-8"));
   await page.setCookie(...cookies);
 
-  console.log("🍪 Cookies loaded");
+  mylogs("🍪", "Cookies loaded");
   return true;
 }
 
 export async function saveCookies(page) {
   const cookies = await page.cookies();
   fs.writeFileSync(COOKIE_PATH, JSON.stringify(cookies, null, 2));
-  console.log("🍪 Cookies saved");
+  mylogs("🍪", "Cookies saved");
 }

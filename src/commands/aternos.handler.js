@@ -4,6 +4,7 @@ import {
 } from "../services/aternos.service.js";
 import { ensureAternos } from "../services/aternos.ensure.js";
 import { withTimeout } from "../lib/utils/withTimeout.js"
+import { mylogs } from "../lib/utils/mylogs.js";
 
 export async function handleAternosCommand(interaction) {
   const sub = interaction.options.getSubcommand()
@@ -30,7 +31,7 @@ export async function handleAternosCommand(interaction) {
     }
 
   } catch (err) {
-    console.error("❌ Aternos error:", err)
+    mylogs("❌",  `Aternos error: ${err}`)
     await interaction.editReply("💥 Aternos stuck / timeout")
   }
 }

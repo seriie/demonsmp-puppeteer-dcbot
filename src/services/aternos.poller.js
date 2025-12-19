@@ -15,10 +15,10 @@ export function startAternosPoller() {
 
   setInterval(async () => {
     try {
+      await skipAternosAds(page);
       const status = await getStatus(getPage);
       if (!status) return;
 
-      await skipAternosAds(page);
       await writeServerState(status);
       mylogs("🔄", "Server status updated");
     } catch (err) {

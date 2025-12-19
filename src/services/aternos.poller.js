@@ -6,7 +6,7 @@ import { getPage } from "../helpers/browser.js";
 
 let running = false;
 
-export function startAternosPoller() {
+export async function startAternosPoller() {
   if (running) return;
   running = true;
   mylogs("⏳", "Starting aternos poller")
@@ -15,6 +15,7 @@ export function startAternosPoller() {
 
   setInterval(async () => {
     try {
+      await skipAternosAds(page);
       const status = await getStatus(getPage);
       if (!status) return;
 

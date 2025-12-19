@@ -19,5 +19,5 @@ export function startAternosPoller() {
     } catch (err) {
       mylogs("❌", `Poller error: ${err}`);
     }
-  }, 30_000);
+  }, 60_000);
 }

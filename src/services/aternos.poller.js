@@ -18,7 +18,7 @@ export async function startAternosPoller() {
     polling = true;
 
     try {
-      const status = await getStatusSafe();
+      const status = await getStatus();
       await writeServerState(status);
       console.log("🔄 Server status updated");
     } catch (e) {

@@ -1,26 +1,25 @@
-import { getPage } from "./browser.js"
-import { selectServer } from "./selectServer.js"
+import { getPage } from "./browser.js";
+import { selectServer } from "./selectServer.js";
 
 export async function startServer() {
-  const page = await getPage()
+  const page = await getPage();
 
   await page.goto("https://aternos.org/server/", {
-    waitUntil: "domcontentloaded"
-  })
+    waitUntil: "domcontentloaded",
+  });
 
-  await selectServer(page)
+  await selectServer(page);
 
-  await page.waitForTimeout(1000)
+  await page.waitForTimeout(1000);
 
-  const startBtn = await page.$("#start")
+  const startBtn = await page.$("#start");
 
   if (!startBtn) {
-    let status = "unknown"
+    let status = "unknown";
     try {
-      status = await page.$eval(
-        ".statuslabel-label",
-        el => el.innerText.trim().toLowerCase()
-      )
+      status = await page.$eval(".statuslabel-label", (el) =>
+        el.innerText.trim().toLowerCase()
+      );
     } catch {}
 
     return {
@@ -32,50 +31,45 @@ export async function startServer() {
           : status === "starting"
           ? "🟡 Server is already starting"
           : "⚠️ Start button not available",
-      lastUpdate: Date.now()
-    }
+      lastUpdate: Date.now(),
+    };
   }
 
-  await startBtn.click()
+  await startBtn.click();
 
   return {
     action: "starting",
     message: "🔥 Server starting...",
-    lastUpdate: Date.now()
-  }
+    lastUpdate: Date.now(),
+  };
 }
-let fetching = false
+let fetching = false;
 
 export async function getStatusSafe() {
-  const page = await getPage()
+  const page = await getPage();
 
-  if (page.isClosed()) throw new Error("Page closed")
+  if (page.isClosed()) throw new Error("Page closed");
 
-  const status = await page.$eval(
-    ".statuslabel-label",
-    el => el.innerText.trim().toLowerCase()
-  )
+  const status = await page.$eval(".statuslabel-label", (el) =>
+    el.innerText.trim().toLowerCase()
+  );
 
-  let players = "0/0"
+  let players = "0/0";
   try {
-    players = await page.$eval(
-      ".statusplayerbadge",
-      el => el.innerText.trim()
-    )
+    players = await page.$eval(".statusplayerbadge", (el) =>
+      el.innerText.trim()
+    );
   } catch {}
 
-  let ip = "-"
+  let ip = "-";
   try {
-    ip = await page.$eval(
-      ".server-ip",
-      el => el.innerText.trim()
-    )
+    ip = await page.$eval(".server-ip", (el) => el.innerText.trim());
   } catch {}
 
   return {
     status,
     players,
     ip,
-    lastUpdate: Date.now()
-  }
+    lastUpdate: Date.now(),
+  };
 }

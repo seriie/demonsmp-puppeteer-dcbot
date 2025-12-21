@@ -1,8 +1,6 @@
 import { getStatus } from "../helpers/aternos.server.js";
 import { writeServerState } from "../helpers/serverState.js";
 import { mylogs } from "../lib/utils/mylogs.js";
-import { skipAternosAds } from "../helpers/skipAternosAds.js";
-import { getPage } from "../helpers/browser.js";
 
 let running = false;
 

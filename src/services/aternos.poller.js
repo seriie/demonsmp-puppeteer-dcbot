@@ -26,5 +26,5 @@ export async function startAternosPoller() {
     } finally {
       polling = false;
     }
-  }, 10_000);
+  }, 30_000);
 }

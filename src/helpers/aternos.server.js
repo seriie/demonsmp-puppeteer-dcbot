@@ -46,47 +46,36 @@ export async function startServer() {
 }
 let fetching = false
 
-export async function getStatus() {
-  if (fetching) return null
-  fetching = true
+export async function getStatusSafe() {
+  const page = await getPage()
 
+  if (page.isClosed()) throw new Error("Page closed")
+
+  const status = await page.$eval(
+    ".statuslabel-label",
+    el => el.innerText.trim().toLowerCase()
+  )
+
+  let players = "0/0"
   try {
-    const page = await getPage()
-
-    await page.goto("https://aternos.org/server/", {
-      waitUntil: "domcontentloaded"
-    })
-
-    await page.waitForSelector(".statuslabel-label", { timeout: 60000 })
-
-    const status = await page.$eval(
-      ".statuslabel-label",
-      el => el.innerText.trim().toLowerCase()
+    players = await page.$eval(
+      ".statusplayerbadge",
+      el => el.innerText.trim()
     )
+  } catch {}
 
-    let players = "0/0"
-    try {
-      players = await page.$eval(
-        ".statusplayerbadge",
-        el => el.innerText.trim()
-      )
-    } catch {}
+  let ip = "-"
+  try {
+    ip = await page.$eval(
+      ".server-ip",
+      el => el.innerText.trim()
+    )
+  } catch {}
 
-    let ip = "-"
-    try {
-      ip = await page.$eval(
-        ".server-ip",
-        el => el.innerText.trim()
-      )
-    } catch {}
-
-    return {
-      status,
-      players,
-      ip,
-      lastUpdate: Date.now()
-    }
-  } finally {
-    fetching = false
+  return {
+    status,
+    players,
+    ip,
+    lastUpdate: Date.now()
   }
 }

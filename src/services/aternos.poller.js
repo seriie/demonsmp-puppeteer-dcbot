@@ -11,18 +11,21 @@ export async function startAternosPoller() {
   running = true;
   mylogs("⏳", "Starting aternos poller")
 
-  const page = await getPage();
+let polling = false
 
-  setInterval(async () => {
-    try {
-      await skipAternosAds(page);
-      const status = await getStatus(getPage);
-      if (!status) return;
+setInterval(async () => {
+  if (polling) return
+  polling = true
 
-      await writeServerState(status);
-      mylogs("🔄", "Server status updated");
-    } catch (err) {
-      mylogs("❌", `Poller error: ${err}`);
-    }
-  }, 60_000);
+  try {
+    const status = await getStatusSafe()
+    await writeServerState(status)
+    console.log("🔄 Server status updated")
+  } catch (e) {
+    console.log("⚠️ Poller error:", e.message)
+  } finally {
+    polling = false
+  }
+}, 60_000)
+
 }

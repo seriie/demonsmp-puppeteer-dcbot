@@ -1,6 +1,6 @@
-import { getStatus } from "../helpers/aternos.server.js";
 import { writeServerState } from "../helpers/serverState.js";
 import { mylogs } from "../lib/utils/mylogs.js";
+import { getStatusSafe } from "../helpers/aternos.server.js";
 
 let running = false;
 
@@ -16,7 +16,7 @@ export async function startAternosPoller() {
     polling = true;
 
     try {
-      const status = await getStatus();
+      const status = await getStatusSafe();
       await writeServerState(status);
       console.log("🔄 Server status updated");
     } catch (e) {

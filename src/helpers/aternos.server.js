@@ -43,7 +43,6 @@ export async function startServer() {
     lastUpdate: Date.now(),
   };
 }
-let fetching = false;
 
 export async function getStatusSafe() {
   const page = await getPage();

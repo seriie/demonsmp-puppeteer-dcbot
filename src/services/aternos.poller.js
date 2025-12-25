@@ -4,25 +4,23 @@ import { getStatusSafe } from "../helpers/aternos.server.js";
 
 let running = false;
 
+let running = false
+
 export async function startAternosPoller() {
-  if (running) return;
-  running = true;
-  mylogs("⏳", "Starting aternos poller");
+  if (running) return
+  running = true
 
-  let polling = false;
-
-  setInterval(async () => {
-    if (polling) return;
-    polling = true;
-
+  async function poll() {
     try {
-      const status = await getStatusSafe();
-      await writeServerState(status);
-      console.log("🔄 Server status updated");
-    } catch (e) {
-      console.log("⚠️ Poller error:", e.message);
+      const status = await getStatusSafe()
+      await writeServerState(status)
+      console.log("🔄 Server status updated")
+    } catch (err) {
+      console.log("⚠️ Poller error:", err.message)
     } finally {
-      polling = false;
+      setTimeout(poll, 60_000)
     }
-  }, 30_000);
+  }
+
+  poll()
 }

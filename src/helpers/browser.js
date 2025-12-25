@@ -8,6 +8,7 @@ export async function getPage() {
     if(process.env.ENVIRONTMENT !== "local") {
       browser = await puppeteer.launch({
         headless: "new",
+        protocolTimeout: 120_000,
         args: [
           "--no-sandbox",
           "--disable-setuid-sandbox",
